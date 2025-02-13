@@ -1,9 +1,6 @@
 name: Deploy AWS CDK on Merge to Master
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     types:
       - closed
