@@ -24,7 +24,7 @@ export class CdkCicdTestStack extends cdk.Stack {
       allowAllOutbound: true
     });
 
-    // Allow SSH access from anywhere (for testing purposes, restrict in production)
+
     // securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'Allow SSH');
 
     const instance = new ec2.Instance(this, 'Instance', {
