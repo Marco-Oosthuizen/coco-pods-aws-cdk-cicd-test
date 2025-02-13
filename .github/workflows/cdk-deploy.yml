@@ -1,0 +1,44 @@
+name: Deploy AWS CDK on Merge to Master
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  deploy-cdk:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: af-south-1
+
+      - name: Synthesize CDK
+        run: cdk synth
+
+      - name: Deploy CDK Stack
+        run: cdk deploy --require-approval never
