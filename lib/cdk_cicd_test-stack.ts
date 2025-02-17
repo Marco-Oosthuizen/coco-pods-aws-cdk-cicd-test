@@ -18,7 +18,7 @@ export class CdkCicdTestStack extends cdk.Stack {
     });
 
     // Define the security group
-    const securityGroup = new ec2.SecurityGroup(this, 'MySecurityGroup', {
+    const securityGroup = new ec2.SecurityGroup(this, 'EC2AllowSSHAccessSecurityGroup', {
       vpc,
       description: 'Allow SSH access',
       allowAllOutbound: true
